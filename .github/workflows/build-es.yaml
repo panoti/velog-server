@@ -5,8 +5,9 @@ on:
   #  - cron: '36 20 * * *'
   push:
     branches: [ "dev" ]
-    # paths:
-    #   - Dockerfile
+    paths:
+      - .github/workflows/build-es.yaml
+      - docker/search/Dockerfile
     # # Publish semver tags as releases.
     # tags: [ 'v*.*.*' ]
   # pull_request:
@@ -16,7 +17,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}/api
+  IMAGE_NAME: ${{ github.repository }}/search
 
 
 jobs:
@@ -65,7 +66,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./docker/search
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
