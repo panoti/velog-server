@@ -1,4 +1,4 @@
-name: Publish Docker CI
+name: Publish Api Image CI
 
 on:
   # schedule:
