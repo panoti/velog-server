@@ -21,6 +21,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/dist ./
 COPY package*.json ./
+ENV NODE_ENV=production
 ENV PORT=5000
 ENV TYPEORM_CONNECTION=postgres
 ENV TYPEORM_HOST=
