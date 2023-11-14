@@ -21,6 +21,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/dist ./
 COPY package*.json ./
+ENV PORT=5000
 ENV TYPEORM_CONNECTION=postgres
 ENV TYPEORM_HOST=
 ENV TYPEORM_USERNAME=velog
@@ -40,5 +41,7 @@ ENV CLIENT_HOST=
 ENV SERVERLESS=true
 ENV ES_HOST=
 ENV REDIS_HOST=
+ENV REDIS_PASSWORD=
 ENV SLACK_TOKEN=
+EXPOSE 5000
 CMD [ "node", "server" ]
