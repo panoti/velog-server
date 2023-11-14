@@ -1,4 +1,4 @@
-name: Publish Docker CI
+name: Publish Search Image CI
 
 on:
   # schedule:
