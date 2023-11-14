@@ -15,7 +15,7 @@ export const unsubscribeEmail: Middleware = async ctx => {
   }
 
   try {
-    const { meta, user_id, sub } = await decodeToken<UnsubscribeEmailToken>(ctx.query.token);
+    const { meta, user_id, sub } = await decodeToken<UnsubscribeEmailToken>(ctx.query.token as string);
     if (sub !== 'unsubscribe-email') {
       ctx.throw(403);
       return;

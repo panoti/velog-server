@@ -378,7 +378,7 @@ export const facebookCallback: Middleware = async (ctx, next) => {
   // get token
   try {
     const accessToken = await getFacebookAccessToken({
-      code,
+      code: code as string,
       clientId: FACEBOOK_ID,
       clientSecret: FACEBOOK_SECRET,
       redirectUri: `${redirectUri}facebook`,
@@ -425,9 +425,9 @@ export const socialCallback: Middleware = async ctx => {
           : `https://${CLIENT_V2_HOST}`;
 
       const state = ctx.query.state
-        ? (JSON.parse(ctx.query.state) as { next: string; integrateState?: string })
+        ? (JSON.parse(ctx.query.state as string) as { next: string; integrateState?: string })
         : null;
-      const next = ctx.query.next || state?.next || '/';
+      const next = ctx.query.next as string || state?.next || '/';
 
       if (next.includes('user-integrate') && state) {
         const isIntegrated = await externalInterationService.checkIntegrated(user.id);
@@ -462,12 +462,12 @@ export const socialCallback: Middleware = async ctx => {
           : `https://${CLIENT_V2_HOST}`;
 
       const state = ctx.query.state
-        ? (JSON.parse(ctx.query.state) as { next: string; integrateState?: string })
+        ? (JSON.parse(ctx.query.state as string) as { next: string; integrateState?: string })
         : null;
 
       console.log(state);
 
-      const next = ctx.query.next || state?.next || '/';
+      const next = ctx.query.next as string || state?.next || '/';
 
       if (next.includes('user-integrate') && state) {
         const isIntegrated = await externalInterationService.checkIntegrated(user.id);
@@ -541,8 +541,8 @@ export const socialRedirect: Middleware = async ctx => {
 
   const loginUrl = generateSocialLoginLink(provider, {
     isIntegrate: isIntegrate === '1',
-    next,
-    integrateState,
+    next: next as string,
+    integrateState: integrateState as string,
   });
   ctx.redirect(loginUrl);
 };

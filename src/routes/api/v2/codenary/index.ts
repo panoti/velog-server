@@ -10,7 +10,7 @@ codenary.get('/token', async ctx => {
     ctx.throw(400, { message: 'Missing code' });
   }
   try {
-    const token = await externalInterationService.exchangeToken(ctx.request.query.code);
+    const token = await externalInterationService.exchangeToken(ctx.request.query.code as string);
     ctx.body = {
       access_token: token,
     };
@@ -25,7 +25,7 @@ codenary.get('/profile', async ctx => {
     return;
   }
   try {
-    const decoded = await externalInterationService.decodeIntegrationToken(ctx.request.query.token);
+    const decoded = await externalInterationService.decodeIntegrationToken(ctx.request.query.token as string);
     if (!decoded) {
       ctx.throw(401);
       return;
@@ -49,16 +49,16 @@ codenary.get('/posts', async ctx => {
     return;
   }
 
-  const isIntegrated = await externalInterationService.checkIntegrated(user_id);
+  const isIntegrated = await externalInterationService.checkIntegrated(user_id as string);
   if (!isIntegrated) {
     ctx.throw(403, 'User not integrated');
     return;
   }
 
   const posts = await postService.findPostsByUserId({
-    userId: user_id,
-    size: size ? parseInt(size) : 20,
-    cursor,
+    userId: user_id as string,
+    size: size ? parseInt(size as string) : 20,
+    cursor: cursor as string,
   });
 
   ctx.body = posts;
